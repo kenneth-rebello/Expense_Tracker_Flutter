@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
         MediaQuery.of(context).padding.top);
 
     final _txList = Container(
-      height: deviceHeight * 0.7,
+      height: deviceHeight * 0.80,
       child: TransactionList(transactions, _deleteTransaction),
     );
 

@@ -1,5 +1,5 @@
+import 'package:expense_tracker/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
@@ -11,78 +11,18 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaConst = MediaQuery.of(context);
     return _transactions.length > 0
         ? Container(
             margin: EdgeInsets.all(10),
             height: 400,
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 2),
-                          ),
-                          child: FittedBox(
-                            child: Text(
-                              '\$ ${_transactions[index].amount.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              _transactions[index].title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            Text(
-                              DateFormat('dd MMM yyyy')
-                                  .format(_transactions[index].date),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: mediaConst.size.width > 400
-                            ? FlatButton.icon(
-                                onPressed: () {
-                                  deleteTransaction(_transactions[index].id);
-                                },
-                                icon: Icon(Icons.delete_forever),
-                                label: Text('Delete'),
-                                color: Theme.of(context).errorColor,
-                              )
-                            : IconButton(
-                                icon: Icon(Icons.delete_forever),
-                                onPressed: () {
-                                  deleteTransaction(_transactions[index].id);
-                                },
-                                color: Theme.of(context).errorColor,
-                              ),
-                      )
-                    ],
+                return TransactionItem(
+                  ValueKey(
+                    _transactions[index].id,
                   ),
+                  _transactions[index],
+                  deleteTransaction,
                 );
               },
               itemCount: _transactions.length,
